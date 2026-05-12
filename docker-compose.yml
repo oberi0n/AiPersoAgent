@@ -1,0 +1,12 @@
+services:
+  real-estate-agent:
+    build: .
+    container_name: real-estate-agent-spain
+    env_file:
+      - .env
+    volumes:
+      - agent_data:/data
+    restart: unless-stopped
+
+volumes:
+  agent_data:
