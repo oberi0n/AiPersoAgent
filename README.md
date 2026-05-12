@@ -27,14 +27,21 @@ Safe, Dockerized real estate prospecting agent focused on Spain.
 1. Open Telegram and chat with **@BotFather**.
 2. Create bot using `/newbot`.
 3. Paste token into `TELEGRAM_BOT_TOKEN`.
-4. Get your chat ID (e.g. using @userinfobot) and set `TELEGRAM_ALLOWED_CHAT_ID`.
+4. Get your chat ID (for example via @userinfobot) and set `TELEGRAM_ALLOWED_CHAT_ID`.
 
 ## Email configuration
-### Gmail
-- Enable 2FA.
-- Create an App Password.
-- Use app password in `IMAP_PASSWORD` and `SMTP_PASSWORD`.
-- Typical hosts: `imap.gmail.com:993`, `smtp.gmail.com:587`.
+### Free.fr (recommended for your use case)
+- Use `imap.free.fr:993` and `smtp.free.fr:587` (already set in `.env.example`).
+- Set:
+  - `SECONDARY_EMAIL_ADDRESS` = mailbox used for alerts + sending summary.
+  - `PRIMARY_EMAIL_ADDRESS` = your private mailbox receiving summaries.
+  - `IMAP_USERNAME` / `SMTP_USERNAME` = secondary email login.
+  - `IMAP_PASSWORD` / `SMTP_PASSWORD` = secondary email password.
+- No MFA is required by your stated setup.
+
+### Gmail (optional alternative)
+- Override host values in `.env` to `imap.gmail.com` and `smtp.gmail.com`.
+- Gmail usually requires 2FA + App Password.
 
 ### Generic IMAP/SMTP
 - Set provider host/port/user/pass values in `.env`.
