@@ -1,9 +1,27 @@
 from __future__ import annotations
 
-
-def interpret_command(text: str) -> dict:
-    return {"enabled": False, "reason": "OpenClaw adapter placeholder", "input": text}
+from dataclasses import dataclass
 
 
-def summarize_listing(listing) -> str:
-    return f"{listing.title} | {listing.price}€ | {listing.location}"
+@dataclass
+class OpenClawAdapter:
+    """Built-in OpenClaw-compatible adapter used by the core workflow."""
+
+    model_name: str = "openclaw-rule-engine"
+
+    def interpret_command(self, text: str) -> dict:
+        lowered = (text or "").strip().lower()
+        if lowered in {"pause", "/pause"}:
+            return {"action": "pause", "confidence": 1.0}
+        if lowered in {"resume", "/resume"}:
+            return {"action": "resume", "confidence": 1.0}
+        if lowered in {"status", "/status"}:
+            return {"action": "status", "confidence": 1.0}
+        return {"action": "unknown", "confidence": 0.0, "raw": text}
+
+    def summarize_listing(self, listing: dict) -> str:
+        title = listing.get("title", "Untitled")
+        price = listing.get("price", "?")
+        location = listing.get("location", "?")
+        surface = listing.get("surface", "?")
+        return f"{title} | {price}€ | {location} | {surface}m²"

@@ -10,6 +10,7 @@ from app.email_reader import fetch_emails
 from app.email_sender import send_summary_email
 from app.filters import apply_filters
 from app.models import Listing, ProcessedEmail
+from app.openclaw_adapter import OpenClawAdapter
 from app.parser import extract_listings
 
 
@@ -21,6 +22,7 @@ class AgentScheduler:
         self.safety = safety
         self.state = state
         self.scheduler = BackgroundScheduler()
+        self.openclaw = OpenClawAdapter()
 
     @staticmethod
     def _dedupe_key(listing: dict) -> str:
@@ -59,7 +61,8 @@ class AgentScheduler:
                     db_listing = Listing(dedupe_key=key, matched=matched, match_reason=reason, **listing)
                     session.add(db_listing)
                     if matched:
-                        matched_for_summary.append(listing | {"reason": reason})
+                        listing_with_reason = listing | {"reason": reason, "openclaw_summary": self.openclaw.summarize_listing(listing)}
+                        matched_for_summary.append(listing_with_reason)
 
         if matched_for_summary:
             for listing in matched_for_summary:

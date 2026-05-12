@@ -3,6 +3,7 @@
 Safe, Dockerized real estate prospecting agent focused on Spain.
 
 ## What it does
+- Uses a built-in OpenClaw adapter in the matching workflow (mandatory).
 - Reads property alert emails from a **secondary mailbox** via IMAP.
 - Parses candidate listings from email content (HTML/text).
 - Applies rule-based filtering from `.env` criteria.
@@ -90,3 +91,6 @@ pytest -q
 
 ## Legal note
 This system does **not** scrape websites by default. It processes only emails already received by the user.
+
+## OpenClaw
+OpenClaw is included and used directly by the scheduler for listing summaries, so no extra service is required.
