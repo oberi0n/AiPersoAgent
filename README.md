@@ -44,6 +44,8 @@ After this, the app will:
 2. Create bot using `/newbot`.
 3. Paste token into `TELEGRAM_BOT_TOKEN`.
 4. Get your chat ID (for example via @userinfobot) and set `TELEGRAM_ALLOWED_CHAT_ID`.
+- `TELEGRAM_BOT_TOKEN` must contain the bot token from BotFather (format like `123456:ABC...`).
+- `TELEGRAM_ALLOWED_CHAT_ID` must be numeric (example: `123456789`).
 
 ## Email configuration
 ### Free.fr (recommended for your use case)
