@@ -12,16 +12,31 @@ Safe, Dockerized real estate prospecting agent focused on Spain.
 - Sends summary emails **only** to `PRIMARY_EMAIL_ADDRESS` from the secondary mailbox.
 - Never sends emails to sellers/third parties.
 
-## Setup
+## Setup (all-in-one Docker package)
 1. Copy environment file:
    ```bash
    cp .env.example .env
    ```
 2. Fill `.env` values.
-3. Run:
+3. Run (everything starts inside Docker):
    ```bash
    docker compose up --build
    ```
+4. Optional legacy command:
+   ```bash
+   docker-compose up --build
+   ```
+
+After this, the app will:
+- Poll the secondary mailbox via IMAP
+- Parse/filter/deduplicate listings
+- Send Telegram match alerts
+- Send summary emails only to `PRIMARY_EMAIL_ADDRESS`
+
+## One-time requirements
+- Create the two email accounts (primary + secondary).
+- Ensure IMAP/SMTP are enabled on the **secondary** mailbox.
+- Put credentials in `.env`.
 
 ## Telegram bot token
 1. Open Telegram and chat with **@BotFather**.
