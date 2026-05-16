@@ -1,0 +1,19 @@
+services:
+  real-estate-agent:
+    build: .
+    container_name: real-estate-agent-spain
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - agent_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import pathlib; pathlib.Path('/app/app/main.py').exists()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  agent_data:
